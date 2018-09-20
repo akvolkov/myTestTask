@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Main</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<h1 style="text-align:center">Список деталей</h1>
+
+<table border = "1">
+    <thead>
+        <tr>
+            <th >Id</th>
+            <th >Наименование</th>
+            <th >Необходимость</th>
+            <th >Количество</th>
+            <th >Редактирование</th>
+            <th >Удаление</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr th:each="part : ${listParts}">
+        <td th:text="${part.id}"></td>
+        <td th:text="${part.name}"></td>
+        <td th:text="${part.need}"></td>
+        <td th:text="${part.count}"></td>
+        <td>
+            <a th:href="@{edit(id=${part.id})}">редактировать</a>
+        </td>
+        <td>
+            <a th:href="@{delete(id=${part.id})}">удалить</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div>Страницы:
+    <tr th:each="page : ${pages}">
+        <td><a th:href="@{pagination(numberPage=${page})}"><b th:text="${page}"></b></a></td>
+    </tr>
+</div>
+
+
+
+<p>
+    <table>
+        <tr>
+            <td>Можно собрать:</td>
+            <td th:text="${n}">ХХХ</td>
+            <td>компьютеров</td>
+        </tr>
+    </table>
+
+<p>
+
+
+    <form method="post" action="/main">
+        <input type="text" name = "name" placeholder="name "/>
+        <input type="text" name = "need" placeholder="need "/>
+        <input type="text" name="count" placeholder="count" />
+        <button type="submit" >Добавить</button>
+    </form>
+
+
+
+<p>
+
+<form method="post" action="filter">
+    <input type="text" name="filter">
+    <button type="submit">Найти</button>
+</form>
+
+<p>
+
+<form method="get" action="/main">
+    <select name="need">
+        <option value="all">Все</option>
+        <option value="y">Нужные для сборки</option>
+        <option value="n">Ненужные для сборки</option>
+    </select><br>
+    <button type="submit">Обновить</button>
+</form>
+</html>
